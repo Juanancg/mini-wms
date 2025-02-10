@@ -1,0 +1,40 @@
+name: C++ CI with Clang 17 and Google Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build libboost-all-dev gcc g++ cmake
+
+    - name: Verify GCC and G++ installation
+      run: |
+        gcc --version
+        g++ --version
+        which gcc
+        which g++
+
+    - name: Configure and Build
+      run: |
+        mkdir build
+        cd build
+        # Set GCC as the compiler explicitly if it's not the default
+        cmake -G Ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..
+        cmake --build .
+
+    - name: Run Tests
+      run: |
+        cd build/tests
+        # Ensure the test executable has the correct permissions and run it
+        chmod +x runTests
+        ./runTests
