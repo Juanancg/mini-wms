@@ -13,6 +13,7 @@ include_directories(include)
 # Define the library with all sources except main
 add_library(warehouse_lib STATIC
     source/Container.cc
+    source/Forklift.cc
     source/Warehouse.cc
 )
 

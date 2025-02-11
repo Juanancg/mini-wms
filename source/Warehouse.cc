@@ -12,3 +12,21 @@ void Warehouse::displayContents() const {
         container.display();
     }
 }
+
+
+void Warehouse::addStorageSystem(std::unique_ptr<IStorageSystem> newStorage)
+{
+    if (newStorage)
+    {
+        storages.push_back(std::move(newStorage));
+    }
+}
+
+void Warehouse::displayStorageSystems() const
+{
+    std::cout << "Warehouse Storages:\n";
+    for (const auto& storage : storages) {
+        if (storage)
+            storage->display();
+    }
+}
